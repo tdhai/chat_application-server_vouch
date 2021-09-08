@@ -16,3 +16,7 @@ Vouch test for the server
 
     - Go to the https://www.heroku.com/ and login. (The account please contact me)
     - Select vouch-chat-application and deploy branch `master`
+
+# 4./ How to verify deploy successfully
+
+    - Go to the https://vouch-chat-application.herokuapp.com/ and see the text `server is up running`
