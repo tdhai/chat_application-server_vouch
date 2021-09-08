@@ -3,7 +3,13 @@ const express = require("express");
 const socketio = require("socket.io");
 const cors = require("cors");
 
-const { addUser, removeUser, getUser, getUsersInRoom } = require("./users");
+const {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom,
+  getUsers,
+} = require("./users");
 
 const router = require("./router");
 
@@ -14,10 +20,14 @@ const io = socketio(server);
 app.use(cors());
 app.use(router);
 
+const limitUser = 1000;
+
 io.on("connect", (socket) => {
   socket.on("join", ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
-
+    if (getUsers().length > limitUser) {
+      throw Error("User is full");
+    }
     if (error) return callback(error);
 
     socket.join(user.room);
@@ -26,6 +36,7 @@ io.on("connect", (socket) => {
       user: "admin",
       text: `${user.name}, welcome to room ${user.room}.`,
     });
+
     socket.broadcast
       .to(user.room)
       .emit("message", { user: "admin", text: `${user.name} has joined!` });
