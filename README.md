@@ -15,4 +15,4 @@ Vouch test for the server
 # 3./ How to deploy the server
 
     - Go to the https://www.heroku.com/ and login. (The account please contact me)
-    - Select vouch-chat-application and deploy branch `tdhai`
+    - Select vouch-chat-application and deploy branch `master`
